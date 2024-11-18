@@ -6,62 +6,98 @@
     <title>Register</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            padding: 50px;
+            background: linear-gradient(to bottom, #fdf4e3, #ffefe8, #e5dbf7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .register-container {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+        h1 {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
             text-align: center;
         }
-        form {
-            background: #fff;
-            padding: 60px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            margin-top: 60px;
-        }
         input[type="text"], input[type="password"] {
-            display: block;
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
         }
         button {
-            background: #007bff;
+            width: 100%;
+            background: #805ef8;
             color: #fff;
-            padding: 10px 20px;
+            font-size: 16px;
+            padding: 15px;
+            margin-top: 20px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
         }
         button:hover {
-            background: #0056b3;
+            background: #6a49cc;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .redirect {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        .redirect a {
+            color: #805ef8;
+            text-decoration: none;
+        }
+        .redirect a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <h1>Register</h1>
-    @if ($errors->any())
-        <div style="color: red;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <div class="register-container">
+        <h1>Register</h1>
+        @if ($errors->any())
+            <div class="error">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <form action="{{ route('register') }}" method="POST">
+            @csrf
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" placeholder="Enter your username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Create a password" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <div class="redirect">
+            <p>Already have an account? <a href="{{ route('login') }}">Log in here</a></p>
         </div>
-    @endif
-    <form action="{{ route('register') }}" method="POST">
-        @csrf
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required>
-
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" required>
-
-        <button type="submit">Register</button>
-    </form>
-
-    <p><a href="{{ route('login') }}">Sudah punya akun? Login di sini</a></p>
+    </div>
 </body>
 </html>
